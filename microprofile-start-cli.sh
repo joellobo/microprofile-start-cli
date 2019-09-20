@@ -1,5 +1,8 @@
 #!/bin/bash
 
+OPTION=$1
+COMMAND=""
+
 NAME="Microprofile Start CLI"
 VERSION="1.0.0"
 
@@ -19,22 +22,25 @@ ARTIFACT_ID_PARAM=""
 
 URL=""
 
-if [ "$1" == 'init' ]; then
+if [ "$OPTION" == '' ]; then
+    COMMAND="help"
+fi
+
+if [ "$COMMAND" == 'init' ]; then
     URL="${PROTOCOL}${URL_BASE}${CONTEXT}${API_VERSION}${RESOURCE_PROJECT}?${SERVER}=${SERVER_PARAM}"
     echo ${URL}
     curl -O -J ${URL}
 fi
 
-if [ "$1" == "help" ]; then
+if [ "$COMMAND" == "help" ]; then
     echo "---------------------------------------------------------------------------------------"
     echo " "
-    echo "Microprofile Start CLI - HELP "
     echo " "
-    echo "$NAME v$VERSION"
+    echo "${NAME} v$VERSION"
     echo " "
     echo "::: OPTIONS ::: "
     echo " "
-    echo "init "
+    echo "init"
     echo "./microprofile-start-cli.sh init --name=demo.zip --groupId=org.example --artifactId=myapp --server=LIBERTY --spec=CONFIG,FAULT_TOLERANCE,JWT_AUTH,METRICS,HEALTH_CHECKS,OPEN_API,OPEN_TRACING,REST_CLIENT "
     echo " "
     echo "--name=<NAME>"
@@ -56,13 +62,14 @@ if [ "$1" == "help" ]; then
     echo "CONFIG,FAULT_TOLERANCE,JWT_AUTH,METRICS,HEALTH_CHECKS,OPEN_API,OPEN_TRACING,REST_CLIENT"
     echo "Default: CONFIG,FAULT_TOLERANCE,JWT_AUTH,METRICS,HEALTH_CHECKS,OPEN_API,OPEN_TRACING,REST_CLIENT"
     echo " "
-    echo " version "
+    echo "version"
     echo " "
-    echo " help "
+    echo "help"
     echo " "
     echo "---------------------------------------------------------------------------------------"
+    echo " " 
 fi
 
-if [ "$1" == "version" ]; then
+if [ "$COMMAND" == "version" ]; then
     echo "$NAME v$VERSION" 
 fi
